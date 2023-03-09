@@ -1,7 +1,10 @@
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import app from '../../firebase/firebase.config';
 
+const auth = getAuth(app)
 const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
@@ -9,6 +12,11 @@ const Login = () => {
         const email = from.email.value;
         const password = from.password.value;
         console.log(email, password);
+        signInWithEmailAndPassword(auth, email, password)
+            .then(result => {
+                console.log(result.user);
+            }).catch(err => console.log(err))
+
     }
     return (
         <div className='mt-5'>
